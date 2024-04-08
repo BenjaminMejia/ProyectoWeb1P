@@ -25,8 +25,13 @@ function agregarTarea(tarea) {
   });
 
   // Texto de la tarea
-  const textoTarea = document.createElement('span');
-  textoTarea.textContent = tarea;
+const textoTarea = document.createElement('span');
+textoTarea.textContent = tarea;
+textoTarea.setAttribute('contenteditable', true); // Hacer el texto editable
+textoTarea.addEventListener('blur', function() {
+  guardarTareas();
+}); // Guardar tarea al perder el foco
+
 
   // Botón para eliminar tarea
   const btnEliminar = document.createElement('button');
@@ -72,22 +77,18 @@ function eliminarTarea(boton) {
   }
 }
 
-
-
-
 // Función para guardar las tareas en el almacenamiento local
 function guardarTareas() {
   const tareas = obtenerTareas();
-  const tareaTexto = nuevaTarea.value;
-  if (tareaTexto) {
-    tareas.push({
-      texto: tareaTexto,
-      completada: false,
-    });
-    nuevaTarea.value = '';
-  }
-  localStorage.setItem('tareas', JSON.stringify(tareas));
+  const tareasActualizadas = Array.from(listaTareas.querySelectorAll('.tarea')).map(tareaElemento => {
+    return {
+      texto: tareaElemento.querySelector('span').textContent,
+      completada: tareaElemento.classList.contains('completada')
+    };
+  });
+  localStorage.setItem('tareas', JSON.stringify(tareasActualizadas));
 }
+
 
 // Mostrar las tareas al cargar la página
 function mostrarTareas() {
