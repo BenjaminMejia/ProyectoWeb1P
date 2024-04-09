@@ -1,74 +1,85 @@
+/* Estilos generales para el cuerpo de la página */
 body {
-  font-family: sans-serif;
-  margin: 20px;
-  background-image: url("../img/fondo.png");
+  font-family: sans-serif; /* Tipo de fuente para todo el cuerpo */
+  margin: 20px; /* Margen alrededor del cuerpo */
+  background-image: url("../img/fondo.png"); /* Imagen de fondo */
 }
 
+/* Estilos para el título principal */
 h1 {
-  margin-top: 0;
-  text-align: center;
+  margin-top: 0; /* Elimina el margen superior del título */
+  text-align: center; /* Centra el título en la página */
 }
 
-footer{
-  background-color: #797171;
-  color: white;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  margin-right: 5px;
+/* Estilos para el pie de página */
+footer {
+  background-color: #797171; /* Color de fondo */
+  color: white; /* Color del texto */
+  position: fixed; /* Fija el pie de página en la parte inferior de la ventana */
+  bottom: 0; /* Alinea el pie de página al borde inferior */
+  width: 100%; /* Ancho completo */
+  text-align: center; /* Centra el contenido del pie de página */
+  margin-right: 5px; /* Margen derecho */
 }
 
+/* Estilos para el contenedor principal */
 .contenedor {
-  margin: 0 auto;
-  margin-top: 40px;
-  width: fit-content;
-  padding: 20px;
-  background-color: rgb(152, 236, 232);
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  margin-top: 40px; /* Margen superior */
+  width: fit-content; /* Ajusta el ancho del contenedor al contenido */
+  padding: 20px; /* Relleno interno */
+  background-color: rgb(152, 236, 232); /* Color de fondo */
 }
 
+/* Estilos para el campo de entrada de nueva tarea */
 #nueva-tarea {
-  width: 500px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
+  width: 500px; /* Ancho del campo de entrada */
+  padding: 10px; /* Relleno interno */
+  margin-bottom: 10px; /* Margen inferior */
+  border: 1px solid #ccc; /* Borde */
 }
 
+/* Estilos para el botón de agregar tarea */
 #btn-agregar {
-  padding: 10px 20px;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+  padding: 10px 20px; /* Relleno interno */
+  background-color: #000; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor al pasar sobre el botón */
 }
 
+/* Estilos para la lista de tareas */
 #lista-tareas {
-  list-style: none;
-  padding: 0;
+  list-style: none; /* Elimina la viñeta de la lista */
+  padding: 0; /* Elimina el relleno */
 }
 
+/* Estilos para cada elemento de la lista de tareas */
 #lista-tareas li {
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
+  padding: 10px; /* Relleno interno */
+  border: 1px solid #ccc; /* Borde */
+  margin-bottom: 10px; /* Margen inferior */
+  display: flex; /* Usa el modelo de caja flexible */
+  justify-content: space-between; /* Distribuye el espacio entre los elementos */
+  align-items: center; /* Alinea verticalmente los elementos */
+  background-color: #fff; /* Color de fondo */
 }
 
+/* Estilos para las tareas completadas */
 #lista-tareas li.completada {
-  background-color:rgb(63, 255, 114);
-  text-decoration: line-through;
+  background-color:rgb(63, 255, 114); /* Color de fondo */
+  text-decoration: line-through; /* Tachado del texto */
 }
 
+/* Estilos para los botones dentro de la lista de tareas */
 #lista-tareas button {
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
+  padding: 5px 10px; /* Relleno interno */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor al pasar sobre el botón */
 }
 
+/* Estilos para el botón de eliminar tarea */
 #lista-tareas button.eliminar {
-  background-color: #f00;
-  color: #fff;
+  background-color: #f00; /* Color de fondo */
+  color: #fff; /* Color del texto */
 }
