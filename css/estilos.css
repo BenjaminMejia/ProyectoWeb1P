@@ -1,10 +1,30 @@
 body {
   font-family: sans-serif;
   margin: 20px;
+  background-image: url("../img/fondo.png");
 }
 
 h1 {
   margin-top: 0;
+  text-align: center;
+}
+
+footer{
+  background-color: #797171;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.contenedor {
+  margin: 0 auto;
+  margin-top: 40px;
+  width: fit-content;
+  padding: 20px;
+  background-color: rgb(152, 236, 232);
 }
 
 #nueva-tarea {
@@ -34,10 +54,11 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
 }
 
 #lista-tareas li.completada {
-  background-color: #ddd;
+  background-color:rgb(63, 255, 114);
   text-decoration: line-through;
 }
 
@@ -49,10 +70,5 @@ h1 {
 
 #lista-tareas button.eliminar {
   background-color: #f00;
-  color: #fff;
-}
-
-#lista-tareas button.completar {
-  background-color: rgb(63, 255, 114);
   color: #fff;
 }
