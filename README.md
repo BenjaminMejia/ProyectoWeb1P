@@ -31,8 +31,8 @@ Finalmente, se accede al repositorio que se copió en la carpeta y se abre el ar
 
 ![](https://github.com/BenjaminMejia/ProyectoWeb1P/blob/main/img/Clonar4.jpg?raw=true)
 
-###Código Fuente
-####HTML
+### Código Fuente
+#### HTML
 
 ```html
 <!DOCTYPE html>
@@ -52,6 +52,8 @@ Finalmente, se accede al repositorio que se copió en la carpeta y se abre el ar
       <!-- Formulario para agregar nueva tarea -->
       <br><br>
       <input type="text" id="nueva-tarea" placeholder="Agregar nueva tarea">
+      <input type="date" id="fecha-asignacion" placeholder="Agregar fecha de asignacion">
+      <input type="date" id="fecha-vencimiento" placeholder="Agregar fecha de asignacion">
       <button id="btn-agregar">Agregar</button>
       <br><br>
       <!-- Lista de tareas -->
@@ -69,7 +71,7 @@ Finalmente, se accede al repositorio que se copió en la carpeta y se abre el ar
 </footer>
 </html>
 ```
-####CSS
+#### CSS
 
 ```css
 /* Estilos generales para el cuerpo de la página */
@@ -107,6 +109,18 @@ footer {
 
 /* Estilos para el campo de entrada de nueva tarea */
 #nueva-tarea {
+  width: 500px; /* Ancho del campo de entrada */
+  padding: 10px; /* Relleno interno */
+  margin-bottom: 10px; /* Margen inferior */
+  border: 1px solid #ccc; /* Borde */
+}
+#nueva-fecha-asignacion {
+  width: 500px; /* Ancho del campo de entrada */
+  padding: 10px; /* Relleno interno */
+  margin-bottom: 10px; /* Margen inferior */
+  border: 1px solid #ccc; /* Borde */
+}
+#nueva-fecha-vencimiento {
   width: 500px; /* Ancho del campo de entrada */
   padding: 10px; /* Relleno interno */
   margin-bottom: 10px; /* Margen inferior */
@@ -156,15 +170,16 @@ footer {
 #lista-tareas button.eliminar {
   background-color: #f00; /* Color de fondo */
   color: #fff; /* Color del texto */
-}
-```
-####JS
+}```
+#### JS
 
 ```javascript
 // Obtener referencias a los elementos del DOM
 const listaTareas = document.getElementById('lista-tareas');
 const nuevaTarea = document.getElementById('nueva-tarea');
 const btnAgregar = document.getElementById('btn-agregar');
+const fechaAsignacion = document.getElementById('fecha-asignacion');
+const fechaVencimiento = document.getElementById('fecha-vencimiento');
 
 // Función para obtener las tareas del almacenamiento local
 function obtenerTareas() {
@@ -176,7 +191,16 @@ function obtenerTareas() {
 }
 
 // Función para agregar una nueva tarea
-function agregarTarea(tarea) {
+// Función para obtener las tareas del almacenamiento local
+function obtenerTareas() {
+  let tareas = JSON.parse(localStorage.getItem('tareas'));
+  if (!tareas) {
+    tareas = []; // Si no hay tareas, inicializa un arreglo vacío
+  }
+  return tareas;
+}
+// Función para agregar una nueva tarea con fechas de asignación y vencimiento
+function agregarTarea(tarea, fechaAsignacion, fechaVencimiento) {
   const elementoTarea = document.createElement('li');
   elementoTarea.classList.add('tarea'); // Agrega la clase 'tarea' al elemento creado
 
@@ -196,6 +220,16 @@ function agregarTarea(tarea) {
     guardarTareas();
   });
 
+  // Span para mostrar la fecha de asignación
+  const spanFechaAsignacion = document.createElement('span');
+  spanFechaAsignacion.textContent = 'Asignada el: ' + fechaAsignacion;
+  spanFechaAsignacion.classList.add('fecha-asignacion');
+
+  // Span para mostrar la fecha de vencimiento
+  const spanFechaVencimiento = document.createElement('span');
+  spanFechaVencimiento.textContent = 'Vence el: ' + fechaVencimiento;
+  spanFechaVencimiento.classList.add('fecha-vencimiento');
+
   // Botón para eliminar tarea
   const btnEliminar = document.createElement('button');
   btnEliminar.classList.add('eliminar'); // Agrega la clase 'eliminar' al botón
@@ -207,12 +241,15 @@ function agregarTarea(tarea) {
   // Agregar elementos a la lista
   elementoTarea.appendChild(checkbox);
   elementoTarea.appendChild(textoTarea);
+  elementoTarea.appendChild(spanFechaAsignacion);
+  elementoTarea.appendChild(spanFechaVencimiento);
   elementoTarea.appendChild(btnEliminar);
   listaTareas.appendChild(elementoTarea);
 
   // Guardar las tareas en el almacenamiento local
   guardarTareas();
 }
+
 
 // Función para marcar una tarea como completada
 function marcarTareaCompletada(checkbox) {
@@ -222,6 +259,7 @@ function marcarTareaCompletada(checkbox) {
   // Guardar las tareas en el almacenamiento local
   guardarTareas();
 }
+
 
 // Función para eliminar una tarea
 function eliminarTarea(boton) {
@@ -247,11 +285,14 @@ function guardarTareas() {
   const tareasActualizadas = Array.from(listaTareas.querySelectorAll('.tarea')).map(tareaElemento => {
     return {
       texto: tareaElemento.querySelector('span').textContent,
-      completada: tareaElemento.classList.contains('completada')
+      completada: tareaElemento.classList.contains('completada'),
+      fechaAsignacion: tareaElemento.querySelector('.fecha-asignacion').textContent,
+      fechaVencimiento: tareaElemento.querySelector('.fecha-vencimiento').textContent,
     };
   });
   localStorage.setItem('tareas', JSON.stringify(tareasActualizadas));
 }
+
 
 // Función para mostrar las tareas al cargar la página
 function mostrarTareas() {
@@ -267,34 +308,54 @@ function mostrarTareas() {
   }
 }
 
-// Agregar eventos a los botones
+
+// Agregar una nueva tarea
 btnAgregar.addEventListener('click', function() {
   const tareaTexto = nuevaTarea.value.trim(); // Eliminar espacios en blanco al inicio y al final del texto
+  const fechaAsignacion = new Date(document.getElementById('fecha-asignacion').value);
+  const fechaVencimiento = new Date(document.getElementById('fecha-vencimiento').value);
+  const fechaActual = new Date(); // Fecha actual
 
-  if (tareaTexto) {
-    agregarTarea(tareaTexto);
-  } else {
-    alert("Agregue el nombre de la nueva tarea"); // Mostrar mensaje de alerta si el campo está vacío
+  // Verificar si el campo de nombre de tarea está vacío
+  if (!tareaTexto) {
+    alert("Agregue el nombre de la nueva tarea");
+    return; // Salir de la función si el campo de nombre de tarea está vacío
   }
+
+  // Verificar si la fecha de asignación está vacía o es anterior a la fecha actual
+  if (!fechaAsignacion || fechaAsignacion < fechaActual) {
+    alert("La fecha de asignación debe ser del día actual en adelante");
+    return; // Salir de la función si la fecha de asignación está vacía o es anterior a la fecha actual
+  }
+
+  // Verificar si la fecha de vencimiento está vacía o es anterior a la fecha de asignación
+  if (!fechaVencimiento || fechaVencimiento < fechaAsignacion) {
+    alert("La fecha de vencimiento debe ser posterior a la fecha de asignación");
+    return; // Salir de la función si la fecha de vencimiento está vacía o es anterior a la fecha de asignación
+  }
+
+  // Si todos los campos están llenos y las fechas son válidas, agregar la tarea
+  agregarTarea(tareaTexto, fechaAsignacion.toLocaleDateString(), fechaVencimiento.toLocaleDateString());
 });
+
 
 
 // Mostrar las tareas al cargar la página
 mostrarTareas();
 ```
-###Enlace GitHub Pages
+### Enlace GitHub Pages
 https://benjaminmejia.github.io/ProyectoWeb1P/WebList.html
 
-###Página Lista de Tareas
+### Página Lista de Tareas
 Al ejecutar la página de forma local o ingresando al enlace, se verá la página de la siguiente manera (ejemplo en PC).
 
 ![](https://github.com/BenjaminMejia/ProyectoWeb1P/blob/main/img/Pagina1.jpg?raw=true)
 
-La página verificará que el campo del nombre no esté vacío al hacer clic en "Agregar", y notificará en caso de que no se haya ingresado el nombre de la nueva tarea.
+La página verificará que el campo del nombre y las asignaciones de fechas no estén vacíos al hacer clic en "Agregar", y notificará en caso de que no se haya ingresado el nombre de la nueva tarea o que no se haya asignado alguna fecha.
 
 ![](https://github.com/BenjaminMejia/ProyectoWeb1P/blob/main/img/Pagina2.jpg?raw=true)
 
-Al agregar una nueva tarea, esta se guardará en una lista que se desplegará hacia abajo y se extenderá en función al número de tareas que se deseen agregar. Las tareas nuevas se agregarán con el estado de "No completado" por defecto.
+Al agregar una nueva tarea, esta se guardará en una lista que se desplegará hacia abajo y se extenderá en función al número de tareas que se deseen agregar. Las tareas nuevas se agregarán por defecto con el estado de "No completado" y sus fechas asignadas.
 
 ![](https://github.com/BenjaminMejia/ProyectoWeb1P/blob/main/img/Pagina3.jpg?raw=true)
 
