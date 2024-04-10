@@ -106,11 +106,15 @@ function mostrarTareas() {
 
 // Agregar eventos a los botones
 btnAgregar.addEventListener('click', function() {
-  const tareaTexto = nuevaTarea.value;
+  const tareaTexto = nuevaTarea.value.trim(); // Eliminar espacios en blanco al inicio y al final del texto
+
   if (tareaTexto) {
     agregarTarea(tareaTexto);
+  } else {
+    alert("Agregue el nombre de la nueva tarea"); // Mostrar mensaje de alerta si el campo está vacío
   }
 });
+
 
 // Mostrar las tareas al cargar la página
 mostrarTareas();
