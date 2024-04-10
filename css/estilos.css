@@ -38,6 +38,18 @@ footer {
   margin-bottom: 10px; /* Margen inferior */
   border: 1px solid #ccc; /* Borde */
 }
+#nueva-fecha-asignacion {
+  width: 500px; /* Ancho del campo de entrada */
+  padding: 10px; /* Relleno interno */
+  margin-bottom: 10px; /* Margen inferior */
+  border: 1px solid #ccc; /* Borde */
+}
+#nueva-fecha-vencimiento {
+  width: 500px; /* Ancho del campo de entrada */
+  padding: 10px; /* Relleno interno */
+  margin-bottom: 10px; /* Margen inferior */
+  border: 1px solid #ccc; /* Borde */
+}
 
 /* Estilos para el botón de agregar tarea */
 #btn-agregar {
