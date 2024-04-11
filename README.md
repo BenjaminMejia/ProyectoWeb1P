@@ -170,7 +170,8 @@ footer {
 #lista-tareas button.eliminar {
   background-color: #f00; /* Color de fondo */
   color: #fff; /* Color del texto */
-}```
+}
+```
 #### JS
 
 ```javascript
